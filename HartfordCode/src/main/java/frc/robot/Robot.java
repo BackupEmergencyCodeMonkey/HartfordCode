@@ -10,8 +10,12 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -26,6 +30,17 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
+  Joystick driveStick = new Joystick(0);
+  Joystick turnStick = new Joystick(1);
+  Joystick copilotStick = new Joystick(2);
+
+  boolean intakePush;
+  boolean intakePull;
+  boolean lowClimb;
+  boolean highClimb;
+  boolean syringePull;
+  boolean syringePush;
+
 
   WPI_TalonSRX driveLeadLeft = new WPI_TalonSRX(1);
   WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(2);
@@ -40,26 +55,38 @@ public class Robot extends TimedRobot {
   SpeedControllerGroup rightSide = new SpeedControllerGroup(driveLeadRight, driveMiddleRight, driveBackRight);
   DifferentialDrive chassisDrive = new DifferentialDrive(leftSide, rightSide);
 
+  DoubleSolenoid s1 = new DoubleSolenoid(0, 7);
+  DoubleSolenoid s2 = new DoubleSolenoid(1, 6);
+  DoubleSolenoid s3 = new DoubleSolenoid(2, 5);
+  DoubleSolenoid s4 = new DoubleSolenoid(3, 4);
+
+  Compressor comp = new Compressor(0);
   @Override
   public void robotInit() {
-    
+    comp.setClosedLoopControl(true);
+    s1.set(Value.kReverse);
   }
   @Override
   public void autonomousInit() {
+    comp.setClosedLoopControl(true);
   }
   @Override
   public void autonomousPeriodic() {
   }
   @Override
   public void teleopInit() {
+    comp.setClosedLoopControl(true);
   }
   @Override
   public void teleopPeriodic() {
+  
   }
   @Override
   public void testInit() {
+  
   }
   @Override
   public void testPeriodic() {
+  
   }
 }
