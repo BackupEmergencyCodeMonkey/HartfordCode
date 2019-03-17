@@ -43,17 +43,17 @@ public class Robot extends TimedRobot {
   boolean syringePull;
   boolean syringePush;
 
-  WPI_TalonSRX driveLeadLeft = new WPI_TalonSRX(1);
-  WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(2);
-  WPI_VictorSPX driveBackLeft = new WPI_VictorSPX(3);
-  WPI_TalonSRX driveLeadRight = new WPI_TalonSRX(4);
-  WPI_VictorSPX driveMiddleRight = new WPI_VictorSPX(5);
-  WPI_VictorSPX driveBackRight = new WPI_VictorSPX(6);
+  WPI_TalonSRX driveFrontLeft = new WPI_TalonSRX(4);
+  WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(5);
+  WPI_VictorSPX driveBackLeft = new WPI_VictorSPX(6);
+  WPI_TalonSRX driveFrontRight = new WPI_TalonSRX(1);
+  WPI_VictorSPX driveMiddleRight = new WPI_VictorSPX(2);
+  WPI_VictorSPX driveBackRight = new WPI_VictorSPX(3);
 
   WPI_TalonSRX elevatorDriver = new WPI_TalonSRX(9);
 
-  SpeedControllerGroup leftSide = new SpeedControllerGroup(driveLeadLeft, driveMiddleLeft, driveBackLeft);
-  SpeedControllerGroup rightSide = new SpeedControllerGroup(driveLeadRight, driveMiddleRight, driveBackRight);
+  SpeedControllerGroup leftSide = new SpeedControllerGroup(driveFrontLeft, driveMiddleLeft, driveBackLeft);
+  SpeedControllerGroup rightSide = new SpeedControllerGroup(driveFrontRight, driveMiddleRight, driveBackRight);
   DifferentialDrive chassisDrive = new DifferentialDrive(leftSide, rightSide);
 
   DoubleSolenoid MOAC = new DoubleSolenoid(0, 7);
@@ -67,10 +67,10 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     comp.setClosedLoopControl(true);
-    MOAC.set(Value.kReverse);
-    lowClimber.set(Value.kReverse);
-    intake.set(Value.kReverse);
-    syringe.set(Value.kReverse);
+    MOAC.set(Value.kOff);
+    lowClimber.set(Value.kOff);
+    intake.set(Value.kOff);
+    syringe.set(Value.kOff);
   }
   @Override
   public void robotPeriodic() {
@@ -89,9 +89,6 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     comp.setClosedLoopControl(true);
     MOAC.set(Value.kReverse);
-    lowClimber.set(Value.kReverse);
-    intake.set(Value.kReverse);
-    syringe.set(Value.kReverse);
   }
   @Override
   public void autonomousPeriodic() {
@@ -129,9 +126,6 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     comp.setClosedLoopControl(true);
     MOAC.set(Value.kReverse);
-    lowClimber.set(Value.kReverse);
-    intake.set(Value.kReverse);
-    syringe.set(Value.kReverse);
   }
   @Override
   public void teleopPeriodic() {
