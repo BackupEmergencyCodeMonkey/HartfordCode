@@ -36,11 +36,12 @@ public class Robot extends TimedRobot {
 
   boolean intakePush;
   boolean intakePull;
-  boolean lowClimb;
-  boolean highClimb;
+  boolean smallClimberUp;
+  boolean smallClimberDown;
+  boolean MOACUp;
+  boolean MOACDown;
   boolean syringePull;
   boolean syringePush;
-
 
   WPI_TalonSRX driveLeadLeft = new WPI_TalonSRX(1);
   WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(2);
@@ -55,27 +56,82 @@ public class Robot extends TimedRobot {
   SpeedControllerGroup rightSide = new SpeedControllerGroup(driveLeadRight, driveMiddleRight, driveBackRight);
   DifferentialDrive chassisDrive = new DifferentialDrive(leftSide, rightSide);
 
-  DoubleSolenoid s1 = new DoubleSolenoid(0, 7);
-  DoubleSolenoid s2 = new DoubleSolenoid(1, 6);
-  DoubleSolenoid s3 = new DoubleSolenoid(2, 5);
-  DoubleSolenoid s4 = new DoubleSolenoid(3, 4);
+  DoubleSolenoid MOAC = new DoubleSolenoid(0, 7);
+  DoubleSolenoid lowClimber = new DoubleSolenoid(1, 6);
+  DoubleSolenoid intake = new DoubleSolenoid(2, 5);
+  DoubleSolenoid syringe = new DoubleSolenoid(3, 4);
 
   Compressor comp = new Compressor(0);
+  double forward;
+  double turn;
   @Override
   public void robotInit() {
     comp.setClosedLoopControl(true);
-    s1.set(Value.kReverse);
+    MOAC.set(Value.kReverse);
+    lowClimber.set(Value.kReverse);
+    intake.set(Value.kReverse);
+    syringe.set(Value.kReverse);
+  }
+  @Override
+  public void robotPeriodic() {
+    intakePull = driveStick.getRawButton(3);
+    intakePush = driveStick.getRawButton(5);
+    syringePull = driveStick.getRawButton(4);
+    syringePush = driveStick.getRawButton(6);
+    smallClimberUp = driveStick.getRawButton(9);
+    smallClimberDown = driveStick.getRawButton(10);
+    MOACUp = driveStick.getRawButton(11);
+    MOACDown = driveStick.getRawButton(12);
+    forward = (driveStick.getRawAxis(1))*-1;
+    turn = driveStick.getRawAxis(0);
   }
   @Override
   public void autonomousInit() {
     comp.setClosedLoopControl(true);
+    MOAC.set(Value.kReverse);
+    lowClimber.set(Value.kReverse);
+    intake.set(Value.kReverse);
+    syringe.set(Value.kReverse);
   }
   @Override
   public void autonomousPeriodic() {
+    chassisDrive.arcadeDrive(forward, turn);
+  if (intakePull && !intakePush) {
+    intake.set(Value.kReverse);
+  } else if (intakePush && !intakePull) {
+    intake.set(Value.kForward);
+  } else {
+    intake.set(Value.kOff);
+  }
+  if (syringePull && !syringePush) {
+    syringe.set(Value.kReverse);
+  } else if (syringePush && !syringePull) {
+    syringe.set(Value.kForward);
+  } else {
+    syringe.set(Value.kOff);
+  }
+  if (MOACUp && !MOACDown) {
+    MOAC.set(Value.kReverse);
+  } else if (MOACDown && !MOACUp) {
+    MOAC.set(Value.kForward);
+  } else {
+    MOAC.set(Value.kOff);
+  }
+  if (smallClimberUp && !smallClimberDown) {
+    lowClimber.set(Value.kForward);
+  } else if (smallClimberDown && !smallClimberUp) {
+    lowClimber.set(Value.kReverse);
+  } else {
+    lowClimber.set(Value.kOff);
+  }
   }
   @Override
   public void teleopInit() {
     comp.setClosedLoopControl(true);
+    MOAC.set(Value.kReverse);
+    lowClimber.set(Value.kReverse);
+    intake.set(Value.kReverse);
+    syringe.set(Value.kReverse);
   }
   @Override
   public void teleopPeriodic() {
@@ -83,7 +139,11 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void testInit() {
-  
+    comp.setClosedLoopControl(true);
+    MOAC.set(Value.kReverse);
+    lowClimber.set(Value.kReverse);
+    intake.set(Value.kReverse);
+    syringe.set(Value.kReverse);
   }
   @Override
   public void testPeriodic() {
