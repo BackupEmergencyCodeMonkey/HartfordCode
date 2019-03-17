@@ -135,7 +135,35 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void teleopPeriodic() {
-  
+    chassisDrive.arcadeDrive(forward, turn);
+  if (intakePull && !intakePush) {
+    intake.set(Value.kReverse);
+  } else if (intakePush && !intakePull) {
+    intake.set(Value.kForward);
+  } else {
+    intake.set(Value.kOff);
+  }
+  if (syringePull && !syringePush) {
+    syringe.set(Value.kReverse);
+  } else if (syringePush && !syringePull) {
+    syringe.set(Value.kForward);
+  } else {
+    syringe.set(Value.kOff);
+  }
+  if (MOACUp && !MOACDown) {
+    MOAC.set(Value.kReverse);
+  } else if (MOACDown && !MOACUp) {
+    MOAC.set(Value.kForward);
+  } else {
+    MOAC.set(Value.kOff);
+  }
+  if (smallClimberUp && !smallClimberDown) {
+    lowClimber.set(Value.kForward);
+  } else if (smallClimberDown && !smallClimberUp) {
+    lowClimber.set(Value.kReverse);
+  } else {
+    lowClimber.set(Value.kOff);
+  }
   }
   @Override
   public void testInit() {
@@ -147,6 +175,33 @@ public class Robot extends TimedRobot {
   }
   @Override
   public void testPeriodic() {
-  
+    if (intakePull && !intakePush) {
+      intake.set(Value.kReverse);
+    } else if (intakePush && !intakePull) {
+      intake.set(Value.kForward);
+    } else {
+      intake.set(Value.kOff);
+    }
+    if (syringePull && !syringePush) {
+      syringe.set(Value.kReverse);
+    } else if (syringePush && !syringePull) {
+      syringe.set(Value.kForward);
+    } else {
+      syringe.set(Value.kOff);
+    }
+    if (MOACUp && !MOACDown) {
+      MOAC.set(Value.kReverse);
+    } else if (MOACDown && !MOACUp) {
+      MOAC.set(Value.kForward);
+    } else {
+      MOAC.set(Value.kOff);
+    }
+    if (smallClimberUp && !smallClimberDown) {
+      lowClimber.set(Value.kForward);
+    } else if (smallClimberDown && !smallClimberUp) {
+      lowClimber.set(Value.kReverse);
+    } else {
+      lowClimber.set(Value.kOff);
+    }
   }
 }
