@@ -26,21 +26,23 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
+
+  WPI_TalonSRX driveLeadLeft = new WPI_TalonSRX(1);
+  WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(2);
+  WPI_VictorSPX driveBackLeft = new WPI_VictorSPX(3);
+  WPI_TalonSRX driveLeadRight = new WPI_TalonSRX(4);
+  WPI_VictorSPX driveMiddleRight = new WPI_VictorSPX(5);
+  WPI_VictorSPX driveBackRight = new WPI_VictorSPX(6);
+
+  WPI_TalonSRX elevatorDriver = new WPI_TalonSRX(9);
+
+  SpeedControllerGroup leftSide = new SpeedControllerGroup(driveLeadLeft, driveMiddleLeft, driveBackLeft);
+  SpeedControllerGroup rightSide = new SpeedControllerGroup(driveLeadRight, driveMiddleRight, driveBackRight);
+  DifferentialDrive chassisDrive = new DifferentialDrive(leftSide, rightSide);
+
   @Override
   public void robotInit() {
-  
-    WPI_TalonSRX driveLeadLeft = new WPI_TalonSRX(1);
-    WPI_VictorSPX driveMiddleLeft = new WPI_VictorSPX(2);
-    WPI_VictorSPX driveBackLeft = new WPI_VictorSPX(3);
-    WPI_TalonSRX driveLeadRight = new WPI_TalonSRX(4);
-    WPI_VictorSPX driveMiddleRight = new WPI_VictorSPX(5);
-    WPI_VictorSPX driveBackRight = new WPI_VictorSPX(6);
-
-    WPI_TalonSRX elevatorDriver = new WPI_TalonSRX(9);
-
-    SpeedControllerGroup leftSide = new SpeedControllerGroup(driveLeadLeft, driveMiddleLeft, driveBackLeft);
-    SpeedControllerGroup rightSide = new SpeedControllerGroup(driveLeadRight, driveMiddleRight, driveBackRight);
-    DifferentialDrive chassisDrive = new DifferentialDrive(leftSide, rightSide);
+    
   }
   @Override
   public void autonomousInit() {
