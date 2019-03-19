@@ -15,6 +15,6 @@ public class Pneumatics {
         solenoid3 = s3;
         solenoid4 = s4;
         compressor = c;
-        System.out.println("Test");
+        System.out.println("Testing");
     }
 }
